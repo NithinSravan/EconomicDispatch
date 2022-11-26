@@ -7,6 +7,7 @@ let nextbtn = document.getElementById("next");
 let prevbtn = document.getElementById("prev");
 let submitbtn=document.getElementById("submit");
 let geninp=document.getElementById("geninp");
+let snoinp=document.getElementById("snoinp");
 let dmndinp=document.getElementById("dmndinp");
 let formsection=document.querySelectorAll("section");
 let manual=document.getElementById("manual");
@@ -46,7 +47,7 @@ let pMax=[];
 let uploadData=(e)=>{
 
   const csvFile = document.getElementById("csvFile");
-  let i=document.getElementById("geninp").value;
+  let i=snoinp.value;
   const input = csvFile.files[0];
   const reader = new FileReader();
   reader.onload = function (e) {
@@ -173,6 +174,7 @@ let nextSection=(e)=>{
 
   n = geninp.value;
   d = dmndinp.value;
+  console.log(n)
   if(n==''||d==''){
     alert();
     return;
