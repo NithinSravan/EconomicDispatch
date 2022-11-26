@@ -12,27 +12,29 @@ let dmndinp=document.getElementById("dmndinp");
 let formsection=document.querySelectorAll("section");
 let manual=document.getElementById("manual");
 let autom=document.getElementById("autom");
+const csvDiv = document.getElementsByClassName("home");
 
+//util for manual entry
 manual.addEventListener("click",()=>{
   document.getElementsByClassName("home")[0].classList.remove("unhide");
   document.getElementsByClassName("home")[0].classList.add("hide");
   document.getElementsByClassName("inst")[0].classList.remove("unhide");
   document.getElementsByClassName("inst")[0].classList.add("hide");
   document.querySelector("form").classList.remove("hide");
+});
 
-})
-const csvDiv = document.getElementsByClassName("home");
+
+
+//util for automatic entry
 autom.addEventListener("click",()=>{
   document.getElementsByClassName("home")[0].classList.remove("unhide");
   document.getElementsByClassName("home")[0].classList.add("hide");
   document.getElementsByClassName("inst")[0].classList.remove("unhide");
   document.getElementsByClassName("inst")[0].classList.add("hide");
-    
-  
-  document.getElementById("submit").style.display="inline-block";
+  document.getElementById("uploadsub").style.display="inline-block";
   csvDiv[1].classList.remove("hide");
   csvDiv[1].classList.add("unhide");
-})
+});
 let d,n;
 let flag=false;
 let epsilon=0.0001;
@@ -44,6 +46,8 @@ let c=[];
 let pG=[];
 let pMin=[];
 let pMax=[];
+
+//upload CSV file and parse values
 let uploadData=(e)=>{
 
   const csvFile = document.getElementById("csvFile");
@@ -56,30 +60,32 @@ let uploadData=(e)=>{
      n=parseFloat(params[0]);
      d=parseFloat(params[1]);
      for(let i=0;i<n;i++){
-      a[i]=parseFloat(params[2+i])
-      a[i]=parseFloat(a[i])
+      a[i]=parseFloat(params[2+i]);
+      a[i]=parseFloat(a[i]);
      }
      for(let i=0;i<n;i++){
-      b[i]=parseFloat(params[2+n+i])
-      b[i]=parseFloat(b[i])
+      b[i]=parseFloat(params[2+n+i]);
+      b[i]=parseFloat(b[i]);
      }
      for(let i=0;i<n;i++){
-      c[i]=parseFloat(params[2+2*n+i])
-      c[i]=parseFloat(c[i])
+      c[i]=parseFloat(params[2+2*n+i]);
+      c[i]=parseFloat(c[i]);
      }
      for(let i=0;i<n;i++){
-      pMin[i]=parseFloat(params[2+3*n+i])
-      pMin[i]=parseFloat(pMin[i])
+      pMin[i]=parseFloat(params[2+3*n+i]);
+      pMin[i]=parseFloat(pMin[i]);
      }
      for(let i=0;i<n;i++){
-      pMax[i]=parseFloat(params[2+4*n+i])
-      pMax[i]=parseFloat(pMax[i])
+      pMax[i]=parseFloat(params[2+4*n+i]);
+      pMax[i]=parseFloat(pMax[i]);
      }
     submitAuto();
   };
   reader.readAsText(input);
  
 }
+
+//submit file
 let submitAuto=()=>{
   for(let i=0;i<n;i++){
     invC[i]=1/(2*c[i]);
@@ -89,7 +95,7 @@ let submitAuto=()=>{
   formsection[2].classList.remove("hide");
   formsection[2].classList.add("unhide");
   prevbtn.style.display="none";
-  submitbtn.style.display="none";
+  document.getElementById("uploadsub").style.display="none";
   nextbtn.style.display="none";
   csvDiv[1].classList.remove("unhide");
   csvDiv[1].classList.add("hide");
@@ -100,7 +106,7 @@ let submitAuto=()=>{
   dispOutput();
 }
 
-
+//create input elements
 let createInpEle=(label,box)=>{
 
   const inpdiv = document.createElement('div');
@@ -123,15 +129,19 @@ let createInpEle=(label,box)=>{
 
 }
 
+//create alert when entries are invalid 
 let alert=()=>{
   document.getElementsByClassName("inst")[1].classList.remove("hide");
   document.getElementsByClassName("inst")[1].classList.add("unhide");
 }
 
+//remove alert once entries are valid 
 let removeAlert=()=>{
   document.getElementsByClassName("inst")[1].classList.remove("unhide");
   document.getElementsByClassName("inst")[1].classList.add("hide");
 }
+
+//create input field dynamically
 let setInputFields=(e)=>{
 
   for(let i=0;i<n;i++){
@@ -148,6 +158,8 @@ let setInputFields=(e)=>{
     createInpEle("Pmax",genbox);
   }
 }
+
+//read inputs into arrays
 let copyParams=(e)=>{
   for(let i=0;i<n;i++){
     a[i]=parseFloat(document.getElementsByClassName("params")[5*i].value);
@@ -157,6 +169,8 @@ let copyParams=(e)=>{
     pMax[i]=parseFloat(document.getElementsByClassName("params")[5*i+4].value);
   }
 }
+
+//action to be taken when prev is clicked
 let prevSection=(e)=>{
   formsection[0].classList.remove("hide");
   formsection[0].classList.add("unhide");
@@ -167,14 +181,12 @@ let prevSection=(e)=>{
   nextbtn.style.display="inline-block";
   
   if(localStorage.getItem("n")!=n)formsection[1].innerHTML="";
-  // copyParams();
 }
 
+//action to be taken when prev is clicked
 let nextSection=(e)=>{
-
   n = geninp.value;
   d = dmndinp.value;
-  console.log(n)
   if(n==''||d==''){
     alert();
     return;
@@ -202,8 +214,8 @@ let nextSection=(e)=>{
 
 let invC=[];
 
+//display output
 let dispOutput=()=>{
-  console.log("lol")
   for(let i=0;i<n;i++){
     const op=document.createElement('div');
     const pgDiv=document.createElement('div');
@@ -253,20 +265,23 @@ let grph=document.getElementsByClassName("pg");
 let closeBtn=document.getElementsByClassName('closebtn');
 let closed=true;
 
+
+//close graph on click
 let closeGraph=(i)=>{
   closed=true;
   graphDiv[i].classList.remove("unhide");
   graphDiv[i].classList.add("hide");
 }
 
+//open graph on click
 let openGraph=(i)=>{
   closed=false;
   graphDiv[i].classList.remove("hide");
   graphDiv[i].classList.add("unhide");
 }
 
+//generate cost charachteristic curve
 let graphCalc=()=>{
-  console.log("lmao")
   for(let i=0;i<n;i++){
   
     const grphDivEle=document.createElement('div');
@@ -284,16 +299,15 @@ let graphCalc=()=>{
     grphLblEle.classList.add("g");
     grphEle.classList.add("pg");
     closeBtnEle.classList.add("closebtn");
-  
+
     closeBtn[i].innerText="Close";
   
     closeBtn[i].addEventListener("click",(e)=>{
       e.preventDefault();
-      closeGraph(i)
+      closeGraph(i);
     });
-    // graphDiv[i].classList.add("unhide");
+
     graphLbl[i].innerHTML=`Generator ${i+1}`;
-    console.log("f");
     let graph = Desmos.GraphingCalculator(grph[i],{keypad:false});
   
     graph.updateSettings({ xAxisLabel: 'P' });
@@ -307,17 +321,20 @@ let graphCalc=()=>{
   
     graph.setExpression({ id: "graph1", latex: `${c[i]}+${b[i]}*x+${a[i]}*x^2=y` ,color:'#ff0b54'});
   }
- 
 }
+
+//check for valid field entries
  let checkArr=(arr)=>{
   let f=true;
   arr.forEach(d=>{
     if(isNaN(d))
-    f=false
+    f=false;
   })
-  if(!f)return true
+  if(!f)return true;
   return false;
  }
+
+ //submit manunally filled form
 let submitForm=(e)=>{
   copyParams();
 
@@ -337,14 +354,12 @@ let submitForm=(e)=>{
   for(let i=0;i<n;i++){
     invC[i]=1/(2*c[i]);
   }
-  
   algorithm();
-  //console.log(invC)
   graphCalc();
   dispOutput();
-
 }
 
+//sum array elements
 let sumArr=(arr)=>{
   let sum=0;
   arr.forEach(e=>{
@@ -353,11 +368,9 @@ let sumArr=(arr)=>{
   return sum;
 }
 
+//iterative algorithm for economic dispatch neglecting transmission losses
 let algorithm=(e)=>{
-
   let k=0;
-  console.log("hi")
-
   delP=0.1;
 
   while(k<m||Math.abs(delP)>epsilon){
