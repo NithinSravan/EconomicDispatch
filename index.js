@@ -180,7 +180,11 @@ let prevSection=(e)=>{
   submitbtn.style.display="none";
   nextbtn.style.display="inline-block";
   
-  if(localStorage.getItem("n")!=n)formsection[1].innerHTML="";
+  if(localStorage.getItem("n")!=n){
+    localStorage.setItem("n",n);
+    formsection[1].innerHTML="";
+  }
+  
 }
 
 //action to be taken when prev is clicked
@@ -207,6 +211,7 @@ let nextSection=(e)=>{
     setInputFields();
   }
   else if(localStorage.getItem("n")!=n){
+    localStorage.setItem("n",n);
     formsection[1].innerHTML="";
     setInputFields();
   }
