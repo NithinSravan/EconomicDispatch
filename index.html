@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js"></script>
+    <title>PSECT Project</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+
+  <div class="form-box">
+    <div class="inst unhide">Upload input data as .CSV by clicking on <strong>Auto</strong>.Click on <strong>Manual</strong> to enter data manually.</div>
+    <div class="home unhide">
+      <div>
+        <a id="manual" href="#">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          Manual
+        </a>
+        <a id="autom" href="#">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          Auto
+        </a>
+      </div>
+      
+    </div>
+    <div class="home hide">
+      <h2 id="csv">Upload CSV File</h2>
+      <div class="input-box">
+        <input id="geninp" type="text" required="">
+        <label>Enter the S.No. of Input</label>
+      </div>
+      <input type="file" id="csvFile" accept=".csv" >
+      <a id="submit" onclick=uploadData() href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Submit
+      </a>
+    </div>
+
+    <form class="hide">
+
+      <!--Section 1-->
+      <div class="inst red hide">All the fields are required. Please enter valid details.</div>
+      <section class="unhide">
+        <h2>Input Details</h2>
+        
+        <div class="inst">Enter the details and click <strong>Next</strong> when done. You can revisit this page incase of any changes.</div>
+        <div class="input-box">
+          <input id="geninp" type="text" required="">
+          <label>Enter the Number of Generators</label>
+        </div>
+        <div class="input-box">
+          <input id="dmndinp" type="text" required="">
+          <label>Enter the Demand</label>
+        </div>
+      </section>
+      <!--Section 2-->
+      <section class="hide">
+        <h2>Enter Generator Parameters</h2>
+        <div class="inst">Enter the parameters and click <strong>Submit</strong> when done. Click on <strong>Prev</strong> to make changes.</div>
+      </section>
+      <!--Section 3-->
+      <section class="hide">
+        <h2>Optimal Dispatch</h2>
+      </section>
+
+      <a id="prev" onclick=prevSection() href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Prev
+      </a>
+
+      <a id="next" onclick=nextSection() href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Next
+      </a>
+      
+      <a id="submit" onclick=submitForm() href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Submit
+      </a>
+
+    </form>
+  </div> 
+  <!-- <div class="graphsec hide">
+    <span class="g"></span>
+    <div class="pg"></div>
+    <button class="closebtn">Close</button>
+  </div> -->
+  <script src="index.js"></script>
+</body>
+</html>
