@@ -299,7 +299,7 @@ let dispOutput=()=>{
     nameLbl.innerHTML=`P<sub>${i+1}</sub>`;
     pgBox.innerText=pG[i].toFixed(2)+" MW";
     cnameLbl.innerHTML=`C<sub>${i+1}</sub>`;
-    cBox.innerText= `Rs.${a[i]+b[i]*pG[i]+c[i]*pG[i]^2}`;
+    cBox.innerText= `Rs.${parseFloat(a[i]+b[i]*pG[i]+c[i]*pG[i]*pG[i]).toFixed(2)}`;
   }
 }
 let graphDiv=document.getElementsByClassName("graphsec");
@@ -359,7 +359,7 @@ let graphCalc=()=>{
       left: 0,
       right: pMax[i],
       bottom: 0,
-      top: a[i]+b[i]*pMax[i]+c[i]*pMax[i]^2 
+      top: a[i]+b[i]*pMax[i]+c[i]*pMax[i]*pMax[i]
     });
   
     graph.setExpression({ id: "graph1", latex: `${a[i]}+${b[i]}*x+${c[i]}*x^2=y` ,color:'#ff0b54'});
