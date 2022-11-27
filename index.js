@@ -84,7 +84,41 @@ let uploadData=(e)=>{
   reader.readAsText(input);
  
 }
+//sum array elements
+let sumArr=(arr)=>{
+  let sum=0;
+  arr.forEach(e=>{
+    sum+=e;
+  })
+  return sum;
+}
 
+//iterative algorithm for economic dispatch neglecting transmission losses
+let algorithm=(e)=>{
+  let k=0;
+  delP=0.1;
+
+  while(k<m||Math.abs(delP)>epsilon){
+
+    for(let i=0;i<n;i++){
+      pG[i]=(lambda-b[i])/(2*c[i]);
+
+      if(pG[i]<pMin[i]){
+        pG[i]=pMin[i];
+      }
+      else if(pG[i]>pMax[i]){
+        pG[i]=pMax[i];
+      }
+    }
+
+    delP=d-sumArr(pG);
+    if(Math.abs(delP)<=epsilon)break;
+    if(k>m)break;
+    delLambda=delP/sumArr(invC);
+    lambda=lambda+delLambda;
+    k++;
+  }   
+}
 //submit file
 let submitAuto=()=>{
   for(let i=0;i<n;i++){
@@ -225,7 +259,7 @@ let invC=[];
 
 //display output
 let dispOutput=()=>{
-  for(let i=0;i<n;i++){
+  for(let i=0;i<n;i++){//################DISPLAY
     const op=document.createElement('div');
     const pgDiv=document.createElement('div');
     const cDiv=document.createElement('div');
@@ -265,7 +299,7 @@ let dispOutput=()=>{
     nameLbl.innerHTML=`P<sub>${i+1}</sub>`;
     pgBox.innerText=pG[i].toFixed(2)+" MW";
     cnameLbl.innerHTML=`C<sub>${i+1}</sub>`;
-    cBox.innerText= `Rs.${c[i]+b[i]*pG[i]+a[i]*pG[i]^2}`;
+    cBox.innerText= `Rs.${a[i]+b[i]*pG[i]+c[i]*pG[i]^2}`;
   }
 }
 let graphDiv=document.getElementsByClassName("graphsec");
@@ -325,7 +359,7 @@ let graphCalc=()=>{
       left: 0,
       right: pMax[i],
       bottom: 0,
-      top: a[i]+b[i]*pMax[i]+c[i]*(pMax[i]**2)
+      top: a[i]+b[i]*pMax[i]+c[i]*pMax[i]^2 
     });
   
     graph.setExpression({ id: "graph1", latex: `${a[i]}+${b[i]}*x+${c[i]}*x^2=y` ,color:'#ff0b54'});
@@ -368,38 +402,3 @@ let submitForm=(e)=>{
   dispOutput();
 }
 
-//sum array elements
-let sumArr=(arr)=>{
-  let sum=0;
-  arr.forEach(e=>{
-    sum+=e;
-  })
-  return sum;
-}
-
-//iterative algorithm for economic dispatch neglecting transmission losses
-let algorithm=(e)=>{
-  let k=0;
-  delP=0.1;
-
-  while(k<m||Math.abs(delP)>epsilon){
-
-    for(let i=0;i<n;i++){
-      pG[i]=(lambda-b[i])/(2*c[i]);
-
-      if(pG[i]<pMin[i]){
-        pG[i]=pMin[i];
-      }
-      else if(pG[i]>pMax[i]){
-        pG[i]=pMax[i];
-      }
-    }
-
-    delP=d-sumArr(pG);
-    if(Math.abs(delP)<=epsilon)break;
-    if(k>m)break;
-    delLambda=delP/sumArr(invC);
-    lambda=lambda+delLambda;
-    k++;
-  }   
-}
