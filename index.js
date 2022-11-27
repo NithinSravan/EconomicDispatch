@@ -325,10 +325,10 @@ let graphCalc=()=>{
       left: 0,
       right: pMax[i],
       bottom: 0,
-      top: c[i]+b[i]*pMax[i]+a[i]*pMax[i]^2
+      top: a[i]+b[i]*pMax[i]+c[i]*pMax[i]^2
     });
   
-    graph.setExpression({ id: "graph1", latex: `${c[i]}+${b[i]}*x+${a[i]}*x^2=y` ,color:'#ff0b54'});
+    graph.setExpression({ id: "graph1", latex: `${a[i]}+${b[i]}*x+${c[i]}*x^2=y` ,color:'#ff0b54'});
   }
 }
 
