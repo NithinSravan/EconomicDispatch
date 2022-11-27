@@ -184,7 +184,6 @@ let prevSection=(e)=>{
     localStorage.setItem("n",n);
     formsection[1].innerHTML="";
   }
-  
 }
 
 //action to be taken when prev is clicked
@@ -212,6 +211,11 @@ let nextSection=(e)=>{
   }
   else if(localStorage.getItem("n")!=n){
     localStorage.setItem("n",n);
+    a=[]
+    b=[]
+    c=[]
+    pMin=[]
+    pMax=[]
     formsection[1].innerHTML="";
     setInputFields();
   }
@@ -342,7 +346,7 @@ let graphCalc=()=>{
  //submit manunally filled form
 let submitForm=(e)=>{
   copyParams();
-
+  console.log(n)
   if(checkArr(a)||checkArr(b)||checkArr(c)||checkArr(pMin)||checkArr(pMax)){
     alert();
     return;
